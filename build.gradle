@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Selenium WebDriver
+    implementation 'org.seleniumhq.selenium:selenium-java:4.12.1'
+
+    // WebDriverManager
+    implementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
+
+    // Cucumber Core
+    implementation 'io.cucumber:cucumber-java:7.11.2'
+    testImplementation 'io.cucumber:cucumber-junit:7.11.2' // Para usar @RunWith con JUnit 4
+
+    // JUnit (necesario solo para correr con Cucumber JUnit)
+    testImplementation 'junit:junit:4.13.2'
+
+    // Allure para Cucumber 7
+    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.21.0'
+}
+
+
+test {
+    useJUnit()
+
+
+    include '**/runners/TestRunner.class'
+
+
+    exclude '**/steps/**'
+    exclude '**/pages/**'
+    exclude '**/utils/**'
+
+    ignoreFailures = true
+    finalizedBy 'allureReport'
+}
+
+
+
+
