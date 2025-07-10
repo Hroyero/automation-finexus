@@ -27,4 +27,10 @@ public class LoginSteps {
         assertTrue(loginPage.getProductTitle().contains(expectedText));
         System.out.println("Texto experado: " + expectedText );
     }
+
+    @Then("Deberian ver el mensaje de error {string}")
+    public void they_should_see_the_error_message(String expectedMessage) {
+        String currentMessage = loginPage.getErrorMessage();
+        assertEquals(expectedMessage, currentMessage);
+    }
 }

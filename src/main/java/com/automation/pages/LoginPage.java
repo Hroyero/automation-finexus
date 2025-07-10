@@ -13,6 +13,7 @@ public class LoginPage extends BasePage {
     private By passwordInput = By.id("password");
     private By loginButton = By.id("login-button");
     private By productsTitle = By.className("title");
+    private By errorMessage = By.cssSelector("h3[data-test='error']");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -31,5 +32,9 @@ public class LoginPage extends BasePage {
     public String getProductTitle() {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productsTitle)).getText();
+    }
+
+    public String getErrorMessage() {
+        return driver.findElement(errorMessage).getText();
     }
 }
