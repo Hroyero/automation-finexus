@@ -1,14 +1,14 @@
-# Java
-*.class
-
 # Gradle
 /build/
-.gradle/
+/.gradle/
+/*.lock
 
-# IntelliJ / VSCode
+# IntelliJ IDEA
 .idea/
 *.iml
-.vscode/
 
 # Logs
 *.log
+
+# Sistema
+.DS_Store
