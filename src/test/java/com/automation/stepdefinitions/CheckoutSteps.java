@@ -1,9 +1,6 @@
 package com.automation.stepdefinitions;
 
-import com.automation.pages.CartPage;
-import com.automation.pages.CheckoutPage;
-import com.automation.pages.LoginPage;
-import com.automation.pages.ProductsPage;
+import com.automation.pages.*;
 import com.automation.utils.DriverFactory;
 import io.cucumber.java.en.*;
 
@@ -19,6 +16,8 @@ public class CheckoutSteps {
     ProductsPage productsPage = new ProductsPage(driver);
     CartPage cartPage = new CartPage(driver);
     CheckoutPage checkoutPage = new CheckoutPage(driver);
+    ProductDetailPage productDetailPage = new ProductDetailPage(driver);
+    OverviewPage overviewPage = new OverviewPage(driver);
 
     @Given("el usuario tiene un producto en el carrito de compras")
     public void theUserHasAProductInTheCart() {
@@ -74,6 +73,16 @@ public class CheckoutSteps {
 
     @Then("el resumen muestra productos seleccionados, precio total y datos del cliente correctamente")
     public void validateFinalSummary() {
-        assertTrue(driver.getCurrentUrl().contains("checkout-step-two"));
+       //String nameDetail = productDetailPage.getProductName();
+        String nameResumen = overviewPage.getResumenProductName();
+        //String priceDetail = productDetailPage.getProductPrice();
+        String priceResumen = overviewPage.getResumenProductPrice();
+        String totalResumen = overviewPage.getResumenTotalPrice();
+        String customerInfo = overviewPage.getResumenCustomerInfo();
+
+        assertEquals( "Sauce Labs Backpack", nameResumen);
+        assertEquals( "$29.99", priceResumen);
+        assertEquals( "Total: $32.39", totalResumen);
+
     }
 }

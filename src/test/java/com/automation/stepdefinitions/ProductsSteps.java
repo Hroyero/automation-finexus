@@ -22,7 +22,7 @@ public class ProductsSteps {
     ProductDetailPage productDetailPage = new ProductDetailPage(driver);
     CartPage cartPage = new CartPage(driver);
 
-    // ✅ VARIABLES para guardar info antes de navegar
+
     String nameDetail;
     String priceDetail;
 
@@ -57,7 +57,7 @@ public class ProductsSteps {
 
     @When("hace clic en el boton Add to cart")
     public void clickAddToCart() {
-        // ✅ CAPTURAR info ANTES de irse
+
         nameDetail = productDetailPage.getProductName();
         priceDetail = productDetailPage.getProductPrice();
 
