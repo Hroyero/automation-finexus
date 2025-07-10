@@ -29,7 +29,7 @@ public class LoginPage extends BasePage {
     }
 
     public String getProductTitle() {
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productsTitle)).getText();
     }
 }

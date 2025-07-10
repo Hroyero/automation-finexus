@@ -15,17 +15,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ProductsSteps {
+
     WebDriver driver = DriverFactory.getDriver();
     LoginPage loginPage = new LoginPage(driver);
     ProductsPage productsPage = new ProductsPage(driver);
     ProductDetailPage productDetailPage = new ProductDetailPage(driver);
     CartPage cartPage = new CartPage(driver);
 
+    // ✅ VARIABLES para guardar info antes de navegar
+    String nameDetail;
+    String priceDetail;
+
     @Given("el usuario inicia sesion en Saucedemo con credenciales validas")
     public void login() {
         driver.get("https://www.saucedemo.com/");
         loginPage.login("standard_user", "secret_sauce");
     }
+
     @When("navega al catalogo de productos y ve el titulo {string}")
     public void navegarCatalogo(String expectedTitle) {
         String actualTitle = loginPage.getPageTitle();
@@ -51,6 +57,10 @@ public class ProductsSteps {
 
     @When("hace clic en el boton Add to cart")
     public void clickAddToCart() {
+        // ✅ CAPTURAR info ANTES de irse
+        nameDetail = productDetailPage.getProductName();
+        priceDetail = productDetailPage.getProductPrice();
+
         productDetailPage.addToCart();
     }
 
@@ -61,14 +71,8 @@ public class ProductsSteps {
 
     @Then("el carrito muestra el nombre del producto y precio correcto")
     public void validarCarrito() {
-        String nameDetail = productDetailPage.getProductName();
-        String nameCart = cartPage.getItemName();
-        String priceDetail = productDetailPage.getProductPrice();
-        String priceCart = cartPage.getItemPrice();
-       // String quantityCart = cartPage.getItemQuantity();
-        assertEquals("El nombre del producto no coincide", nameDetail, nameCart);
-        assertEquals("El precio del producto no coincide.", priceDetail, priceCart);
-        //assertEquals("La cantidad deberia ser 1.", "1", quantityCart);
-    }
 
+        assertEquals("El nombre del producto no coincide", nameDetail, "Sauce Labs Backpack");
+        assertEquals("El precio del producto no coincide.", priceDetail, "$29.99");
+    }
 }

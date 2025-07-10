@@ -1,3 +1,4 @@
+@Products
 Feature: Comprar un producto como usuario registrado en Saucedemo
 @TC001
   # TC001 - Seleccionar un producto valido

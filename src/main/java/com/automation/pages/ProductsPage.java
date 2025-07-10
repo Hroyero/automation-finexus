@@ -6,25 +6,26 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductsPage extends BasePage {
 
-    private By productLink = By.xpath("//div[@class='inventory_item']//a");
+    private By firstProductLink = By.className("inventory_item_name");  // link del primer producto visible
+    private By addToCartButton = By.xpath("//button[contains(text(),'Add to cart')]");
+    private By cartIcon = By.className("shopping_cart_link");
 
     public ProductsPage(WebDriver driver) {
         super(driver);
     }
 
+    // Selecciona el primer producto de la lista de productos
     public void selectFirstProduct() {
-        driver.findElement(productLink).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstProductLink)).click();
     }
 
-    public void addProductToCart(String productName) {
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[text()='" + productName + "']/ancestor::div[@class='inventory_item']")
-        )).click();
+    // Click en Add to Cart (si se llama aquí en la página de productos)
+    public void addToCart() {
+        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
     }
 
-    public String getCartBadgeCount() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.className("shopping_cart_badge")
-        )).getText();
+    // Ir al carrito desde el icono de carrito
+    public void goToCart() {
+        wait.until(ExpectedConditions.elementToBeClickable(cartIcon)).click();
     }
 }
