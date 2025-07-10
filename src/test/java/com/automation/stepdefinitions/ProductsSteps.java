@@ -33,23 +33,23 @@ public class ProductsSteps {
     }
 
     @When("navega al catalogo de productos y ve el titulo {string}")
-    public void navegarCatalogo(String expectedTitle) {
+    public void goToCatalog(String expectedTitle) {
         String actualTitle = loginPage.getPageTitle();
         assertEquals(expectedTitle, actualTitle);
     }
 
     @When("selecciona un producto disponible")
-    public void seleccionarProducto() {
+    public void productSelect() {
         productsPage.selectFirstProduct();
     }
 
     @Then("el sistema muestra el detalle del producto correctamente")
-    public void validarDetalleProducto() {
+    public void detailProduct() {
         assertTrue(driver.getCurrentUrl().contains("inventory-item"));
     }
 
     @Given("el usuario esta en la pagina de detalle de un producto valido")
-    public void usuarioEnDetalleProducto() {
+    public void detailUserProduct() {
         driver.get("https://www.saucedemo.com/");
         loginPage.login("standard_user", "secret_sauce");
         productsPage.selectFirstProduct();
@@ -65,14 +65,13 @@ public class ProductsSteps {
     }
 
     @And("navega al carrito de compras")
-    public void navegarCarrito() {
+    public void goToCart() {
         productDetailPage.goToCart();
     }
 
     @Then("el carrito muestra el nombre del producto y precio correcto")
-    public void validarCarrito() {
-
-        assertEquals("El nombre del producto no coincide", nameDetail, "Sauce Labs Backpack");
-        assertEquals("El precio del producto no coincide.", priceDetail, "$29.99");
+    public void validateCart() {
+        assertEquals( nameDetail, "Sauce Labs Backpack");
+        assertEquals( priceDetail, "$29.99");
     }
 }

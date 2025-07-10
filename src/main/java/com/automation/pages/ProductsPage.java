@@ -14,17 +14,17 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
-    // Selecciona el primer producto de la lista de productos
+
     public void selectFirstProduct() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(firstProductLink)).click();
     }
 
-    // Click en Add to Cart (si se llama aquí en la página de productos)
+
     public void addToCart() {
         wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
     }
 
-    // Ir al carrito desde el icono de carrito
+
     public void goToCart() {
         wait.until(ExpectedConditions.elementToBeClickable(cartIcon)).click();
     }

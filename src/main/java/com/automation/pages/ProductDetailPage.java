@@ -21,7 +21,7 @@ public class ProductDetailPage extends BasePage {
 
     public void goToCart() {
         driver.findElement(cartIcon).click();
-        // Espera explícita para confirmar que se cargó el carrito
+
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Your Cart']")));
     }
 

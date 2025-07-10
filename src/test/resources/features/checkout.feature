@@ -6,7 +6,7 @@ Feature: Pagar un producto como usuario registrado en Saucedemo
     Given el usuario tiene un producto en el carrito de compras
     When navega al checkout
     And completa el formulario de checkout con "John", "Doe", "12345"
-    Then El usuario debería ver un mensaje de confirmacion "Thank you for your order!"
+    Then El usuario deberia ver un mensaje de confirmacion "Thank you for your order!"
 
   # TC004 - Intento de compra con campos vacíos
   Scenario: Intentar compra con campos vacios

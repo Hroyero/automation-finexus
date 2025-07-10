@@ -21,7 +21,7 @@ public class CheckoutSteps {
     CheckoutPage checkoutPage = new CheckoutPage(driver);
 
     @Given("el usuario tiene un producto en el carrito de compras")
-    public void elUsuarioTieneUnProductoEnElCarrito() {
+    public void theUserHasAProductInTheCart() {
         driver.get("https://www.saucedemo.com/");
         loginPage.login("standard_user", "secret_sauce");
         productsPage.selectFirstProduct(); // Debes tener este método en ProductsPage
@@ -30,22 +30,22 @@ public class CheckoutSteps {
     }
 
     @When("navega al checkout")
-    public void navegaAlCheckout() {
+    public void navigateToCheckout() {
         cartPage.clickCheckout();
     }
 
     @And("completa el formulario de checkout con {string}, {string}, {string}")
-    public void completaFormularioCheckout(String fName, String lName, String zip) {
+    public void completeCheckoutForm(String fName, String lName, String zip) {
         checkoutPage.fillCheckoutForm(fName, lName, zip);
     }
 
     @And("hace clic en continuar")
-    public void haceClicEnContinuar() {
+    public void clickContinue() {
         checkoutPage.clickContinue();
     }
 
-    @Then("El usuario debería ver un mensaje de confirmacion {string}")
-    public void elUsuarioVeMensajeConfirmacion(String expectedMessage) {
+    @Then("El usuario deberia ver un mensaje de confirmacion {string}")
+    public void userSeesConfirmationMessage(String expectedMessage) {
         checkoutPage.clickContinue();
         checkoutPage.clickFinish();
         String actualMessage = checkoutPage.getConfirmationMessage();
@@ -53,28 +53,27 @@ public class CheckoutSteps {
     }
 
     @Then("El mensaje de error de pago deberia ser {string}")
-    public void mensajeErrorPago(String expectedError) {
+    public void paymentErrorMessage(String expectedError) {
         String actualError = checkoutPage.getErrorMessage();
         assertEquals(expectedError, actualError);
     }
 
     @Given("el usuario completa el formulario de checkout con datos validos")
-    public void usuarioCompletaCheckoutValido() {
-        elUsuarioTieneUnProductoEnElCarrito();
+    public void userCompletesValidCheckoutForm() {
+        theUserHasAProductInTheCart();
         cartPage.clickCheckout();
         checkoutPage.fillCheckoutForm("John", "Doe", "12345");
         checkoutPage.clickContinue();
     }
 
     @When("revisa la pagina de resumen de compra")
-    public void revisaResumen() {
+    public void reviewSummaryPage() {
         String summary = checkoutPage.getSummaryTitle();
         assertTrue(summary.contains("Checkout: Overview"));
     }
 
     @Then("el resumen muestra productos seleccionados, precio total y datos del cliente correctamente")
-    public void validarResumenFinal() {
-        // Aquí podrías agregar asserts más específicos:
+    public void validateFinalSummary() {
         assertTrue(driver.getCurrentUrl().contains("checkout-step-two"));
     }
 }
