@@ -1,9 +1,11 @@
-name: Deploy Allure Report to GitHub Pages
+name: CI + Deploy Allure Report
 
 on:
-  workflow_dispatch:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -33,7 +35,7 @@ jobs:
       - name: Generate Allure Report
         run: ./gradlew allureReport
 
-      - name: Upload Allure Report as artifact for Pages
+      - name: Upload Allure Report to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/reports/allure-report
