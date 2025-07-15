@@ -1,4 +1,4 @@
-name: Deploy Allure Report to GitHub Pagess
+name: Deploy Allure Report to GitHub Pages
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Java
@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set executable permissions to gradlew
+      - name: Grant permissions to Gradle wrapper
         run: chmod +x gradlew
 
       - name: Run tests
@@ -28,8 +28,10 @@ jobs:
       - name: Generate Allure Report
         run: ./gradlew allureReport
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: build/reports/allure-report
+          force_orphan: true
