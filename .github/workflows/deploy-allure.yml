@@ -1,9 +1,14 @@
 name: Deploy Allure Report to GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
-  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
@@ -28,10 +33,10 @@ jobs:
       - name: Generate Allure Report
         run: ./gradlew allureReport
 
-      - name: Deploy Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Allure Report as artifact for Pages
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: build/reports/allure-report
-          force_orphan: true
+          path: build/reports/allure-report
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
