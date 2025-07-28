@@ -1,14 +1,15 @@
-package com.automation.stepdefinitions;
+package com.automation.hooks;
 
 import io.cucumber.java.Before;
 import io.cucumber.java.After;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import com.automation.utils.DriverFactory;
 
 public class Hooks {
-    public static WebDriver driver;
+
+    private WebDriver driver;
 
     @Before
     public void setUp() {

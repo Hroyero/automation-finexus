@@ -16,6 +16,7 @@ Feature: Pagar un producto como usuario registrado en Saucedemo
     And hace clic en continuar
     Then El mensaje de error de pago deberia ser "Error: First Name is required"
 
+    @Resument
   # TC005 - Validación del resumen final antes del pago
   Scenario: Validar resumen final antes del pago
     Given el usuario completa el formulario de checkout con datos validos

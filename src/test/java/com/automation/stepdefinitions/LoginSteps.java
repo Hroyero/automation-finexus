@@ -1,6 +1,8 @@
 package com.automation.stepdefinitions;
 
+import com.automation.hooks.Hooks;
 import com.automation.pages.LoginPage;
+import com.automation.utils.DriverFactory;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
 
@@ -9,12 +11,13 @@ import static org.junit.Assert.assertTrue;
 
 public class LoginSteps {
 
-    WebDriver driver = Hooks.driver;
-    LoginPage loginPage = new LoginPage(driver);
+
+    LoginPage loginPage;
 
     @Given("el usuario esta en la pagina de login")
     public void openBrowser() {
-        driver.get("https://www.saucedemo.com/");
+        loginPage = new LoginPage(DriverFactory.getDriver());
+        DriverFactory.getDriver().get("https://www.saucedemo.com/");
     }
 
     @When("el usuario ingresa credenciales username {string} y password {string}")

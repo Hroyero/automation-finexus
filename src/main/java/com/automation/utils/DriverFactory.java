@@ -1,21 +1,15 @@
 package com.automation.utils;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DriverFactory {
-    private static WebDriver driver;
-
-    public static void setDriver(WebDriver driver) {
-
-        DriverFactory.driver = driver;
-    }
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
-        ChromeOptions options = new ChromeOptions();
+        return driver.get();
+    }
 
-        // Modo incógnito
-        options.addArguments("--incognito");
-        return driver;
+    public static void setDriver(WebDriver webDriver) {
+        driver.set(webDriver);
     }
 }
