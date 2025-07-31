@@ -2,13 +2,19 @@ package com.automation.hooks;
 
 import io.cucumber.java.Before;
 import io.cucumber.java.After;
+import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import com.automation.utils.DriverFactory;
-import io.cucumber.java.Scenario;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Hooks {
 
@@ -17,7 +23,18 @@ public class Hooks {
     @Before
     public void setUp() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        String env = System.getProperty("env");
+        if ("ci".equals(env)) {
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        }
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         DriverFactory.setDriver(driver);
     }
@@ -26,9 +43,22 @@ public class Hooks {
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
             scenario.log("Scenario failing, please refer to the image attached to this report");
-            final byte[] screenshot = ((TakesScreenshot) driver)
-                    .getScreenshotAs(OutputType.BYTES);
-            scenario.attach(screenshot, "image/png", "Screenshot of the error");
+
+            try {
+                // Tomar screenshot como bytes (para adjuntar al reporte)
+                final byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+                scenario.attach(screenshotBytes, "image/png", "Screenshot of the error");
+
+                // Crear carpeta screenshots si no existe
+                Files.createDirectories(Paths.get("screenshots"));
+
+                // Guardar la screenshot en archivo físico para GitHub Actions
+                File screenshotFile = new File("screenshots/" + scenario.getName().replaceAll(" ", "_") + ".png");
+                Files.write(screenshotFile.toPath(), screenshotBytes);
+
+            } catch (IOException e) {
+                System.out.println("Error al guardar screenshot: " + e.getMessage());
+            }
         }
 
         if (driver != null) {

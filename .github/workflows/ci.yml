@@ -27,7 +27,7 @@ jobs:
       - name: Run tests with Gradle
         run: ./gradlew clean test
 
-      - name: Upload Cucumber HTML Report as artifact
+      - name: Upload Cucumber HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
