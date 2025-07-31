@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'io.qameta.allure' version '2.11.2'
 }
 
 repositories {
@@ -15,13 +14,9 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-junit:7.11.2'
     testImplementation 'junit:junit:4.13.2'
 
-    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.21.0'
 }
 
-// 🔄 Limpiar resultados y reportes anteriores de Allure antes de correr
-task cleanAllureResults(type: Delete) {
-    delete 'allure-results', 'build/allure-results', 'build/reports/allure-report'
-}
+
 
 test {
     useJUnit()
@@ -33,6 +28,5 @@ test {
     exclude '**/utils/**'
 
     ignoreFailures = true
-    finalizedBy 'allureReport'
-    dependsOn cleanAllureResults
+
 }

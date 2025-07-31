@@ -6,16 +6,14 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/features",
-        glue = {
-                "com.automation.stepdefinitions",
-                "com.automation.hooks"
-        },
         plugin = {
                 "pretty",
-                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+                "html:target/cucumber-reports/html-report.html",
+                "json:target/cucumber-reports/cucumber.json"
         },
-        tags = "@Login",
+        features = "src/test/resources/features",
+        glue = {"com.automation.stepdefinitions",  "com.automation.hooks"},
+        tags = "@positive",
         monochrome = true
 )
 public class TestRunner {

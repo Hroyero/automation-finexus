@@ -8,7 +8,7 @@ Feature: Login
   @positive
   Scenario: [LOGIN_001] Usuario valido accede correctamente
     When el usuario ingresa credenciales username "standard_user" y password "secret_sauce"
-    Then el usuario deberia ver el texto "Products"
+    Then el usuario deberia ver el texto "Productsx"
 
   # TC002 - Usuario vacío
   @negative
